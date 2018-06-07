@@ -12,7 +12,9 @@ RUN npm config set registry https://apro.nbnco.net.au/api/npm/npm-remote
 RUN npm config set cafile /etc/ssl/certs/ca-certificates.crt
 
 # Create app directory
+RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
+
 # Copy package files for npm install before copying app files that are less volatile
 COPY package*.json ./
 
@@ -26,5 +28,5 @@ COPY . .
 EXPOSE 3000
 CMD [ "mocha" ]
 #CMD [ "npm", "test" ]
-ENTRYPOINT ["npm start"]
+ENTRYPOINT ["npm", "start"]
 #CMD ["${COMMANMD}", "${ARG}"]
