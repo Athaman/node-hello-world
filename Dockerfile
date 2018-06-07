@@ -13,13 +13,15 @@ RUN npm config set cafile /etc/ssl/certs/ca-certificates.crt
 
 # Create app directory
 WORKDIR /usr/src/app
-# Bundle app source
-COPY . .
+# Copy package files for npm install before copying app files that are less volatile
+COPY package*.json ./
 
 # Install application dependencies
 RUN npm install -g mocha && \
     npm install -g jshint && \
     npm install
+
+COPY . .
 
 EXPOSE 3000
 CMD [ "mocha" ]
